@@ -1,29 +1,32 @@
 var express = require('express');
-var bodyParser = require('body-parser');
+var app = express();
 
-const app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var apiai = require('apiai');
 
-// Create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var apiai_app = apiai("6d6f546051164cbf9103b51f7f0556d6");
 
 app.use(express.static('public'));
+
 app.get('/index.html', function (req, res) {
     res.sendFile( __dirname + "/" + "index.html" );
 })
 
-app.post('/process_post', urlencodedParser, function (req, res) {
-    // Prepare output in JSON format
-    response = {
-        msg:req.body.msg
-    };
-    console.log(response);
-    res.end(JSON.stringify(response));
+http.listen(8081,function(){
+    console.log('listening on *:8081');
 })
 
-var server = app.listen(8081, function () {
-    var host = server.address().address
-    var port = server.address().port
+io.on('connection', function(socket){
+    socket.on('usermsg', function(msg){
 
-    console.log("Example app listening at http://%s:%s", host, port)
+        var request = apiai_app.textRequest( msg, {
+            sessionId: 'elocwelo'
+        });
 
-})
+        request.on('response', function(response) {
+            io.emit('botmsg', response.result.fulfillment.speech);
+        });
+        request.end();
+    });
+});
