@@ -1,9 +1,11 @@
 var socket = io();
+var msg = "Hello bot!";
+$('#msg').val(msg);
 
 $('#msg').keyup(function(e){
     if(e.keyCode == 13)
     {
-        var msg = $('#msg').val();
+        msg = $('#msg').val();
         console.log(msg);
 
         $('#msg_area').append($('<li>').text(msg).addClass("message usermsg"));
@@ -13,6 +15,9 @@ $('#msg').keyup(function(e){
 
         $('#msg').val('');
         return false;
+    }
+    else if(e.keyCode == 38){
+        $('#msg').val(msg);
     }
 });
 
