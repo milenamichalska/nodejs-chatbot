@@ -14,14 +14,14 @@ app.get('/index.html', function (req, res) {
 })
 
 http.listen(8081,function(){
-    console.log('listening on *:8081');
+    console.log('Listening on localhost:8081');
 })
 
 io.on('connection', function(socket){
     socket.on('usermsg', function(msg){
 
         var request = apiai_app.textRequest( msg, {
-            sessionId: 'elocwelo'
+            sessionId: 'myfirstbot'
         });
 
         request.on('response', function(response) {

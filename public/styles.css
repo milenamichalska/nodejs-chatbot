@@ -15,8 +15,12 @@ input {
     width: 400px;
 }
 
+#heading_area {
+    height:10%;
+}
+
 #msg_area {
-    height: 450px;
+    height: 80vh;
     overflow-y: scroll;
 }
 
