@@ -24,7 +24,6 @@ $('#msg').keyup(function(e){
         scrollDown();
         bubbles();
         scrollDown();
-        $('#msg_area').remove( ".bubble-chat" );
 
         socket.emit('usermsg', msg);
 
@@ -39,6 +38,7 @@ $('#msg').keyup(function(e){
 
 socket.on('botmsg', function(msg){
     console.log(msg);
+    //remove bubbles
     $('#msg_area').append($('<li>').text(msg).addClass("message botmsg"));
     scrollDown();
 });
