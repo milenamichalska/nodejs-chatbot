@@ -1,15 +1,6 @@
 var socket = io();
-var msg = "Hello bot!";
-$('#msg').val(msg);
+$('#msg').focus();
 
-var bubbles = function () {
-    $('#msg_area').append('<p class="bubble-chat"> ' +
-        '<div class="container-circle"> ' +
-        '<div class="circle cc1" id="circle1">' +
-        '</div> <div class="circle cc2" id="circle2">' +
-        '</div> <div class="circle cc3" id="circle3">' +
-        '</div> </div> </p>');
-};
 var scrollDown = function () {
     $('#msg_area').animate({ scrollTop: $(document).height() }, "slow");
 }
@@ -21,8 +12,6 @@ $('#msg').keyup(function(e){
         console.log(msg);
 
         $('#msg_area').append($('<li>').text(msg).addClass("message usermsg"));
-        scrollDown();
-        bubbles();
         scrollDown();
 
         socket.emit('usermsg', msg);
@@ -38,7 +27,6 @@ $('#msg').keyup(function(e){
 
 socket.on('botmsg', function(msg){
     console.log(msg);
-    //remove bubbles
     $('#msg_area').append($('<li>').text(msg).addClass("message botmsg"));
     scrollDown();
 });
